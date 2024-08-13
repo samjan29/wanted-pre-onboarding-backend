@@ -12,6 +12,7 @@ public class DataInitializer implements ApplicationRunner {
 
     private final CompanyDataInit companyDataInit;
     private final RecruitmentNoticeDataInit recruitmentNoticeDataInit;
+    private final UsersDataInit usersDataInit;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -23,6 +24,7 @@ public class DataInitializer implements ApplicationRunner {
         recruitmentNoticeDataInit.insertRecruitmentNoticeData3(company3);
         Company company4 = companyDataInit.insertCompanyData4();
         recruitmentNoticeDataInit.insertRecruitmentNoticeData4(company4);
+        usersDataInit.insertUsersData();
     }
 
 }
