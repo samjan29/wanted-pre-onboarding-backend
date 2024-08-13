@@ -1,4 +1,4 @@
-package com.job.entity;
+package com.job.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
