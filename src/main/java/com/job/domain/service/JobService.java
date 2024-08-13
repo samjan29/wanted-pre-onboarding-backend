@@ -18,7 +18,7 @@ public class JobService {
     private final RecruitmentNoticeRepository recruitmentNoticeRepository;
     private final CompanyRepository companyRepository;
 
-    public void createRecruitNotice(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
+    public void createRecruitmentNotice(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
 
         isRecruitmentNoticeInfoEverythingNull(handleRecruitmentNoticeDto);
 
@@ -45,7 +45,7 @@ public class JobService {
                 () -> new CustomException(ErrorCode.NOT_FOUND)
         );
 
-        modifyInfo(handleRecruitmentNoticeDto, recruitmentNotice);
+        modifyRecruitmentNoticeInfo(handleRecruitmentNoticeDto, recruitmentNotice);
 
         RecruitmentNotice changedRecruitmentNotice = recruitmentNoticeRepository.save(recruitmentNotice);
 
@@ -65,7 +65,7 @@ public class JobService {
         }
     }
 
-    private void modifyInfo(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto, RecruitmentNotice recruitmentNotice) {
+    private void modifyRecruitmentNoticeInfo(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto, RecruitmentNotice recruitmentNotice) {
 
         String position = handleRecruitmentNoticeDto.position();
         Integer compensation = handleRecruitmentNoticeDto.compensation();

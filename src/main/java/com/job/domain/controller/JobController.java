@@ -14,13 +14,13 @@ public class JobController {
     private final JobService jobService;
 
     @PostMapping("/job")
-    public ResponseEntity<Void> createRecruitNotice(@RequestBody HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
-        jobService.createRecruitNotice(handleRecruitmentNoticeDto);
+    public ResponseEntity<Void> createRecruitmentNotice(@RequestBody HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
+        jobService.createRecruitmentNotice(handleRecruitmentNoticeDto);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/job/{recruitmentNoticeId}")
-    public ResponseEntity<HandleRecruitmentNoticeDto> modifyRecruitNotice(@PathVariable(name = "recruitmentNoticeId") Long recruitmentNoticeId, @RequestBody HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
+    public ResponseEntity<HandleRecruitmentNoticeDto> modifyRecruitmentNotice(@PathVariable(name = "recruitmentNoticeId") Long recruitmentNoticeId, @RequestBody HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
         return ResponseEntity.ok(jobService.modifyRecruitmentNotice(recruitmentNoticeId, handleRecruitmentNoticeDto));
     }
 }
