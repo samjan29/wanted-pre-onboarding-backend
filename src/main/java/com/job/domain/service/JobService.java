@@ -18,7 +18,7 @@ public class JobService {
     private final RecruitmentNoticeRepository recruitmentNoticeRepository;
     private final CompanyRepository companyRepository;
 
-    public void createRecruitNotice(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
+    public void createRecruitmentNotice(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
 
         isRecruitmentNoticeInfoEverythingNull(handleRecruitmentNoticeDto);
 
@@ -45,11 +45,20 @@ public class JobService {
                 () -> new CustomException(ErrorCode.NOT_FOUND)
         );
 
-        modifyInfo(handleRecruitmentNoticeDto, recruitmentNotice);
+        modifyRecruitmentNoticeInfo(handleRecruitmentNoticeDto, recruitmentNotice);
 
         RecruitmentNotice changedRecruitmentNotice = recruitmentNoticeRepository.save(recruitmentNotice);
 
         return new HandleRecruitmentNoticeDto(changedRecruitmentNotice);
+    }
+
+    public void deleteRecruitmentNotice(Long recruitmentNoticeId) {
+
+        if (recruitmentNoticeRepository.findById(recruitmentNoticeId).isEmpty()) {
+            throw new CustomException(ErrorCode.NOT_FOUND);
+        }
+
+        recruitmentNoticeRepository.deleteById(recruitmentNoticeId);
     }
 
     /**
@@ -65,7 +74,7 @@ public class JobService {
         }
     }
 
-    private void modifyInfo(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto, RecruitmentNotice recruitmentNotice) {
+    private void modifyRecruitmentNoticeInfo(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto, RecruitmentNotice recruitmentNotice) {
 
         String position = handleRecruitmentNoticeDto.position();
         Integer compensation = handleRecruitmentNoticeDto.compensation();
