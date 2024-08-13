@@ -1,10 +1,13 @@
 package com.job.domain.controller;
 
 import com.job.domain.dto.HandleRecruitmentNoticeDto;
+import com.job.domain.dto.RecruitmentNoticeDto;
 import com.job.domain.service.JobService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/job")
@@ -20,7 +23,9 @@ public class JobController {
     }
 
     @PutMapping("/{recruitmentNoticeId}")
-    public ResponseEntity<HandleRecruitmentNoticeDto> modifyRecruitmentNotice(@PathVariable(name = "recruitmentNoticeId") Long recruitmentNoticeId, @RequestBody HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
+    public ResponseEntity<HandleRecruitmentNoticeDto> modifyRecruitmentNotice(
+            @PathVariable(name = "recruitmentNoticeId") Long recruitmentNoticeId,
+            @RequestBody HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
         return ResponseEntity.ok(jobService.modifyRecruitmentNotice(recruitmentNoticeId, handleRecruitmentNoticeDto));
     }
 
@@ -28,5 +33,21 @@ public class JobController {
     public ResponseEntity<Void> deleteRecruitmentNotice(@PathVariable(name = "recruitmentNoticeId") Long recruitmentNoticeId) {
         jobService.deleteRecruitmentNotice(recruitmentNoticeId);
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 채용공고 조회 API
+     * 검색어가 있어도 없어도 조회 가능
+     *
+     * @param search
+     * @return 채용공고 리스트
+     */
+    @GetMapping
+    public ResponseEntity<List<RecruitmentNoticeDto>> getRecruitmentNoticeList(@RequestParam(name = "search", required = false) String search) {
+        if (search != null && !search.isEmpty()) {
+            return ResponseEntity.ok(jobService.searchRecruitmentNotice(search));
+        } else {
+            return ResponseEntity.ok(jobService.getAllRecruitmentNotice());
+        }
     }
 }
