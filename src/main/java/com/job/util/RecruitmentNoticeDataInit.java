@@ -20,6 +20,22 @@ public class RecruitmentNoticeDataInit {
                 .contents("짱개발자 구함")
                 .skill("Python")
                 .build());
+
+        recruitmentNoticeRepository.save(RecruitmentNotice.builder()
+                .company(company)
+                .position("프론트엔드 주니어 개발자")
+                .compensation(1500000)
+                .contents("짱개발자 구함")
+                .skill("javascript")
+                .build());
+
+        recruitmentNoticeRepository.save(RecruitmentNotice.builder()
+                .company(company)
+                .position("데브옵스")
+                .compensation(1500000)
+                .contents("짱개발자 구함")
+                .skill("AWS")
+                .build());
     }
 
     public void insertRecruitmentNoticeData2(Company company) {

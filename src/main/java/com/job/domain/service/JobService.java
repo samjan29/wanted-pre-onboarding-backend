@@ -1,6 +1,7 @@
 package com.job.domain.service;
 
 import com.job.domain.dto.HandleRecruitmentNoticeDto;
+import com.job.domain.dto.RecruitmentNoticeDetailDto;
 import com.job.domain.dto.RecruitmentNoticeDto;
 import com.job.domain.entity.Company;
 import com.job.domain.entity.RecruitmentNotice;
@@ -65,6 +66,7 @@ public class JobService {
         recruitmentNoticeRepository.deleteById(recruitmentNoticeId);
     }
 
+
     /**
      * 검색어로 조회
      *
@@ -76,6 +78,7 @@ public class JobService {
         return convertRecruitmentNotice(recruitmentNoticeList);
     }
 
+
     /**
      * 검색어 없이 전체 조회
      *
@@ -85,6 +88,27 @@ public class JobService {
         List<RecruitmentNotice> recruitmentNoticeList = recruitmentNoticeRepository.findAll();
         return convertRecruitmentNotice(recruitmentNoticeList);
     }
+
+    /**
+     * 채용공고 상세페이지 조회
+     * 목록 조회 객체에 contents와 같은 회사의 다른 공고 id가 포함되어 있습니다.
+     *
+     * @param recruitmentNoticeId
+     * @return
+     */
+    public RecruitmentNoticeDetailDto getRecruitmentNoticeDetail(Long recruitmentNoticeId) {
+
+        RecruitmentNotice recruitmentNotice = recruitmentNoticeRepository.findById(recruitmentNoticeId).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND)
+        );
+
+        Company company = recruitmentNotice.getCompany();
+
+        List<Long> idList = recruitmentNoticeRepository.findIdByCompany(recruitmentNoticeId, company);
+
+        return new RecruitmentNoticeDetailDto(recruitmentNotice, company, idList);
+    }
+
 
     /**
      * 채용공고를 등록/수정 할 때 받지 못한 데이터가 있는지 확인합니다.
@@ -119,6 +143,7 @@ public class JobService {
             recruitmentNotice.setSkill(skill);
         }
     }
+
 
     /**
      * Entity를 DTO로 변환시켜 줍니다.

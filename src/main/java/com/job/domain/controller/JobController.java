@@ -1,6 +1,7 @@
 package com.job.domain.controller;
 
 import com.job.domain.dto.HandleRecruitmentNoticeDto;
+import com.job.domain.dto.RecruitmentNoticeDetailDto;
 import com.job.domain.dto.RecruitmentNoticeDto;
 import com.job.domain.service.JobService;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +50,18 @@ public class JobController {
         } else {
             return ResponseEntity.ok(jobService.getAllRecruitmentNotice());
         }
+    }
+
+
+    /**
+     * 채용공고 상세 조회 API
+     * 상세 내용과 해당 회사의 다른 공고의 id도 조회
+     *
+     * @param recruitmentNoticeId
+     * @return
+     */
+    @GetMapping("/detail")
+    public ResponseEntity<RecruitmentNoticeDetailDto> getRecruitmentNoticeDetail(@RequestParam(name = "id") Long recruitmentNoticeId) {
+        return ResponseEntity.ok(jobService.getRecruitmentNoticeDetail(recruitmentNoticeId));
     }
 }
