@@ -11,7 +11,6 @@ import org.hibernate.type.SqlTypes;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +21,8 @@ public class Users {
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String name;
+
+    public Users(String name) {
+        this.name = name;
+    }
 }
