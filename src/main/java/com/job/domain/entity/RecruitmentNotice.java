@@ -2,7 +2,9 @@ package com.job.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
@@ -38,9 +40,11 @@ public class RecruitmentNotice {
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String skill;
 
+    @CreationTimestamp
     @Column(name = "created_at", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at", columnDefinition = "timestamp on update current_timestamp")
     private LocalDateTime updatedAt;
 }
