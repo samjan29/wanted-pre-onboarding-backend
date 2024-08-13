@@ -23,4 +23,10 @@ public class JobController {
     public ResponseEntity<HandleRecruitmentNoticeDto> modifyRecruitmentNotice(@PathVariable(name = "recruitmentNoticeId") Long recruitmentNoticeId, @RequestBody HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
         return ResponseEntity.ok(jobService.modifyRecruitmentNotice(recruitmentNoticeId, handleRecruitmentNoticeDto));
     }
+
+    @DeleteMapping("/job/{recruitmentNoticeId}")
+    public ResponseEntity<Void> deleteRecruitmentNotice(@PathVariable(name = "recruitmentNoticeId") Long recruitmentNoticeId) {
+        jobService.deleteRecruitmentNotice(recruitmentNoticeId);
+        return ResponseEntity.ok().build();
+    }
 }

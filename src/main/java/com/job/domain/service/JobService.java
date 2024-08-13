@@ -52,6 +52,15 @@ public class JobService {
         return new HandleRecruitmentNoticeDto(changedRecruitmentNotice);
     }
 
+    public void deleteRecruitmentNotice(Long recruitmentNoticeId) {
+
+        if (recruitmentNoticeRepository.findById(recruitmentNoticeId).isEmpty()) {
+            throw new CustomException(ErrorCode.NOT_FOUND);
+        }
+
+        recruitmentNoticeRepository.deleteById(recruitmentNoticeId);
+    }
+
     /**
      * 채용공고를 등록/수정 할 때 받지 못한 데이터가 있는지 확인합니다.
      * record 에서 검증을 했으나 record 에 null이라는 새로운 필드가 생성되서 반환되어서 service 로 이동
