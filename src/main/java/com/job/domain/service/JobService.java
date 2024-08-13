@@ -20,10 +20,7 @@ public class JobService {
 
     public void createRecruitNotice(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
 
-        if (handleRecruitmentNoticeDto.isNull()) {
-            // 프론트에서 유효성 검증을 하기 때문에 상황을 알려주는 메세지 없이 400 예외 던짐
-            throw new CustomException(ErrorCode.BAD_REQUEST);
-        }
+        isRecruitmentNoticeInfoEverythingNull(handleRecruitmentNoticeDto);
 
         Company company = companyRepository.findById(handleRecruitmentNoticeDto.companyId()).orElseThrow(
                 () -> new CustomException(ErrorCode.NOT_FOUND)
@@ -55,17 +52,25 @@ public class JobService {
         return new HandleRecruitmentNoticeDto(changedRecruitmentNotice);
     }
 
+    /**
+     * 채용공고를 등록/수정 할 때 받지 못한 데이터가 있는지 확인합니다.
+     * record 에서 검증을 했으나 record 에 null이라는 새로운 필드가 생성되서 반환되어서 service 로 이동
+     *
+     */
+    private void isRecruitmentNoticeInfoEverythingNull(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto) {
+        // 어떤 데이터도 받지 못했다면 예외 발생
+        if (handleRecruitmentNoticeDto.position() == null && handleRecruitmentNoticeDto.compensation() == null
+                && handleRecruitmentNoticeDto.contents() == null && handleRecruitmentNoticeDto.skill() == null) {
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
+    }
+
     private void modifyInfo(HandleRecruitmentNoticeDto handleRecruitmentNoticeDto, RecruitmentNotice recruitmentNotice) {
 
         String position = handleRecruitmentNoticeDto.position();
         Integer compensation = handleRecruitmentNoticeDto.compensation();
         String contents = handleRecruitmentNoticeDto.contents();
         String skill = handleRecruitmentNoticeDto.skill();
-
-        // 어떤 데이터도 받지 못했다면 예외 발생
-        if (position == null && compensation == null && contents == null && skill == null) {
-            throw new CustomException(ErrorCode.BAD_REQUEST);
-        }
 
         if (position != null) {
             recruitmentNotice.setPosition(position);
