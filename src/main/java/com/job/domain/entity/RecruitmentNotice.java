@@ -25,17 +25,21 @@ public class RecruitmentNotice {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
+    @Setter
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String position;
 
+    @Setter
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.INTEGER)
     private Integer compensation;
 
+    @Setter
     @Column(nullable = false, columnDefinition = "text")
     private String contents;
 
+    @Setter
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String skill;
