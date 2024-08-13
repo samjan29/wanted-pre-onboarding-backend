@@ -1,7 +1,7 @@
-package com.job.entity;
+package com.job.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -9,8 +9,7 @@ import org.hibernate.type.SqlTypes;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +28,10 @@ public class Company {
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private String region;
+
+    public Company(String name, String country, String region) {
+        this.name = name;
+        this.country = country;
+        this.region = region;
+    }
 }
